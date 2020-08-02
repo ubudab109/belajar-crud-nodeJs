@@ -5,7 +5,7 @@
 
 
 ## Project Belajar
-Memembuat program CRUD menggunakan Node Js. Plugin yang digunakan adalah express, express-session, HBS, Body Parser dan Mysql
+Memmbuat program CRUD menggunakan Node Js. Plugin yang digunakan adalah express, express-session, HBS, Body Parser dan Mysql
 
 Project ini masih bisa dikembangkan kembali.
 

@@ -1,0 +1,171 @@
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>CRUD NODE JS</title>
+		<link rel="stylesheet" href="/assets/css/bootstrap.css" type="text/css" />
+	</head>
+
+	<body>
+		<div class="container">
+			<a href="/logout" class="btn btn-primary">logout</a>
+			<h2>Product List</h2>
+				<button class="btn btn-success" data-toggle="modal" data-target="#myModalAdd">Add Product</button>
+
+			<table class="table table-striped" id="mytable">
+				<thead>
+					<tr>
+						<th>Product Id</th>
+						<th>Product Name</th>
+						<th>Product Price</th>
+						<th>Action</th>
+					</tr>
+					
+				</thead>
+				<tbody>
+					{{#each results}}
+					<tr>
+						<td>{{id}}</td>
+						<td>{{name}}</td>
+						<td>{{price}}</td>
+						<td>
+							<!-- <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="{{id}}" data-name="{{name}}" data-price="{{price}}">Edit</a> -->
+
+							<a href="#EditModal" data-toggle="modal" data-target="#EditModal" class="btn btn-sm btn-info edit" data-id="{{id}}" data-name="{{name}}" data-price="{{price}}">Edit</a>
+
+
+							<a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="{{id}}">Delete</a>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+
+
+		<!-- Modal Add -->
+	<div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+		      <div class="modal-body">
+		        <!-- form -->
+		      				<form action="/save" method="post">
+
+									<div class="form-group">
+										<input type="text" class="form-control" name="name" placeholder="Product Name" required>
+									</div>
+
+									<div class="form-group">
+										<input type="number" class="form-control" name="price" placeholder="Product Price" required>
+									</div>
+			  </div>
+
+			  <div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+			  </div>
+								</form>
+		      <!-- end form -->
+		    </div>
+		  </div>
+		</div>
+	</div>
+
+
+	<!-- modal update -->
+	<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Edit Modal</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+		      <div class="modal-body">
+		        <!-- form -->
+		      				<form action="/update" method="post">
+
+							<div class="form-group">
+								<input type="text" class="form-control name" name="name" placeholder="Product Name" required>
+							</div>
+							<div class="form-group">
+								<input type="number" class="form-control price" name="price" placeholder="Product Price" required>
+							<input type="hidden" name="id" class="id">
+
+							</div>
+			  		</div>
+
+			  <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Update</button>
+			  </div>
+			</form>
+		      <!-- end form -->
+		    </div>
+		  </div>
+		</div>
+	</div>
+
+		<!-- Modal Delete -->
+		<div class="modal fade" id="DeleteModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">Modal Delete</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <!-- form -->
+		        <form id="add-row-form" action="/delete" method="post">
+		        	<strong>Anda Yakin Ingin Menghapus Data ini?</strong>
+		      </div>
+		      <div class="modal-footer">
+		        					<input type="hidden" name="id" class="form-control id2" required>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<button type="submit" class="btn btn-danger">Delete</button>
+		      </div>
+		  	</form>
+		    </div>
+		  </div>
+		</div>
+		<!-- modal delete product -->
+
+
+		<script src="/assets/js/jquery-3.5.1.js"></script>
+		<script src="/assets/js/bootstrap.js"></script>
+		<script>
+			$(document).ready(function(){
+				// tampilkan data modal untuk edit
+				$('#mytable').on('click','.edit',function(){
+					var product_id = $(this).data('id');
+					var product_name = $(this).data('name');
+					var product_price = $(this).data('price');
+
+					$('#EditModal').modal('show');
+					$('.name').val(product_name);
+					$('.price').val(product_price);
+					$('.id').val(product_id);
+					console.log(product_id);
+				});
+
+				 $('#mytable').on('click','.delete',function(){
+		        var product_id = $(this).data('id');
+		        $('#DeleteModal').modal('show');
+		        $('.id2').val(product_id);
+      });
+ 
+    
+			});
+		</script>
+	</body>
+	
+</html>
